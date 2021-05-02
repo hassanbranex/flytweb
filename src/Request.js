@@ -5,7 +5,8 @@ const request={
     resgestration:'user/register',
     accountVerify:'user/verify',
     forgetPassword:'auth/forgotpwd',
-    resetPasspord:'auth/forgotpwd/reset'
+    resetPasspord:'auth/forgotpwd/reset',
+    upgradeToken:'auth/token/upgrade'
 }
 
 export default request; 

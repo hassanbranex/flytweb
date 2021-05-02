@@ -3,19 +3,17 @@ import {Button, Row, Col,Form, FormGroup, Label, Input} from 'reactstrap';
 import axios from '../axios';
 import '../style/signIn_sigUp.css';
 import { useForm } from "react-hook-form";
+import pattern from "../regix"
 
 const FormSignIn = () => { 
     const { register, handleSubmit,reset,
     formState: { errors }} = useForm();
-    
-    const emailRegix=/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i;
     const signInFor=(data,e)=>{
         e.preventDefault();
         axios.post('auth/token',{
             email: data.userEmail,
                 password:data.userPassword,
         }).then(res=>{
-            console.log(res.data);
             localStorage.setItem("current_user",JSON.stringify(res.data));
             e.target.reset(); 
         }).catch(err=>{
@@ -30,7 +28,7 @@ const FormSignIn = () => {
                    <Col sm="6">
                    <FormGroup>
                         <Label for="userEmail">Email Address</Label>
-                        <Input type="email"  {...register("userEmail", {required: true,pattern:emailRegix}) }  placeholder="Email"  className={ `${errors?.userEmail ? "errors" : ""}`} />
+                        <Input type="email"  {...register("userEmail", {required: true,pattern:pattern.email}) }  placeholder="Email"  className={ `${errors?.userEmail ? "errors" : ""}`} />
                         {errors?.userEmail?.type === "required" && <p>This field is required</p>}
                         {errors?.userEmail?.type === "pattern" && (
                             <p>Please enter valid email address.</p>
